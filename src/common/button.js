@@ -1,17 +1,20 @@
 var React = require('react-native');
 var {
     Text,
-    View,
-    Button,
+    TouchableHighlight,
     StyleSheet
     } = React;
 
 module.exports = React.createClass({
+
     render: function () {
         return (
-            <View style={styles.container}>
-                <Button style={styles.button}>{this.props.button}</Button>
-            </View>
+            <TouchableHighlight
+                style={styles.button}
+                underlayColor={'gray'}
+                onPress={this.props.onPress}>
+                <Text style={styles.buttonText}>{this.props.text}</Text>
+            </TouchableHighlight>
         )
     }
 });
@@ -22,6 +25,14 @@ var styles = StyleSheet.create({
     },
     button: {
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        borderColor:'black',
+        borderWidth:1,
+        borderRadius:5,
+        padding:5,
+        marginTop:10
+    },
+    buttonText: {
+        flex: 1
     }
 });

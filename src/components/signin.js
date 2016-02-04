@@ -20,24 +20,23 @@ module.exports = React.createClass({
     render: function () {
         return (
             <View style={styles.container}>
-                <Text>Sign in</Text>
 
-                <Text style={styles.label}>Username:</Text>
+                <Text style={styles.label}>Lakamyn</Text>
                 <TextInput style={styles.input}
                            value={this.state.username}
                            onChangeText={(text)=>this.setState({username: text})}
                 />
 
-                <Text style={styles.label}>Password:</Text>
+                <Text style={styles.label}>Parol</Text>
                 <TextInput style={styles.input}
-                           secureEntryText={true}
+                           secureTextEntry={true}
                            value={this.state.password}
                            onChangeText={(text)=>this.setState({password: text})}
                 />
 
                 <Text style={styles.label}>{this.state.errorMessage}</Text>
-                <Button text={'Sign in'} onPress={this.onPress}/>
-                <Button text={'Sign up'} onPress={this.onSignUpPress}/>
+                <Button text={'Iceri gir'} onPress={this.onPress}/>
+                <Button text={'Registraciya'} onPress={this.onSignUpPress}/>
 
             </View>
         );

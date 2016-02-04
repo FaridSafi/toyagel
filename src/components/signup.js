@@ -20,26 +20,37 @@ module.exports = React.createClass({
     render: function () {
         return (
             <View style={styles.container}>
-                <Text>Sign up</Text>
+                <Text>Registraciya</Text>
 
-                <Text style={styles.label}>Email</Text>
+                <Text style={styles.label}>Lakamyn</Text>
                 <TextInput
                     style={styles.input}
-                    value={this.state.email}
-                    onChangeText={(text) => this.setState({email: text})}
+                    value={this.state.username}
+                    onChangeText={(text) => this.setState({username: text})}
                     />
 
-                <Text>Password</Text>
+                <Text>Parol</Text>
                 <TextInput
                     style={styles.input}
-                    secureEntryText={true}
+                    secureTextEntry={true}
                     value={this.state.password}
-                    onChangeText={(text) => this.setState({password:text})}
+                    onChangeText={(text) => this.setState({password: text})}
 
                     />
+                <Button text={'Registraciya'} onPress={this.onSignUpPress}></Button>
 
             </View>
         );
+    },
+    onSignUpPress: function () {
+        var user = new Parse.User();
+        user.set('username', this.state.username);
+        user.set('password', this.state.password);
+
+        user.signUp(null,{
+            succes: (user) => {this.props.navigator.immediatelyResetRouteStack({name: 'search'}); },
+            error: (user, error) => {this.setState({errorMessage: error.message});}
+        });
     }
 });
 
