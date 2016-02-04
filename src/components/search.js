@@ -25,16 +25,19 @@ module.exports = React.createClass({
     render: function () {
         return (
             <View style={styles.container}>
-                <Text style={styles.result}>{this.props.navigator}</Text>
+                <Text style={styles.dates}>Hello</Text>
             </View>
         );
     }
 });
 
-var StyleSheet = React.create({
+var styles = StyleSheet.create({
     container: {
         justifyContent: 'center',
         alignItems: 'center'
     },
-    result: {}
+    dates:{
+        alignItems:'center'
+    }
+
 });

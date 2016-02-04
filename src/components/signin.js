@@ -19,7 +19,7 @@ module.exports = React.createClass({
     },
     render: function () {
         return (
-            <View styles={styles.container}>
+            <View style={styles.container}>
                 <Text>Sign in</Text>
 
                 <Text style={styles.label}>Username:</Text>
@@ -47,8 +47,8 @@ module.exports = React.createClass({
     },
     onPress: function () {
         Parse.User.logIn(this.state.username, this.state.password, {
-            success:(user)=>{this.props.navigator.immediatelyResetRouteStack([{name:'search'}]);},
-            error:(data,error)=> {this.setState({errorMessage:error.message});}
+            success:(user)=> { this.props.navigator.immediatelyResetRouteStack([{name: 'search'}]);},
+            error:(data, error)=> {this.setState({errorMessage: error.message});}
         });
     }
 });
