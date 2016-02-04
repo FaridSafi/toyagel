@@ -4,9 +4,9 @@ var {
     Navigator
     }= React;
 var Parse = require("parse/react-native");
-var Signin = require('./src/components/signin');
-var Signup = require('./src/components/signup');
-var Search = require('./src/components/search');
+var Signin = require('./components/signin');
+var Signup = require('./components/signup');
+var Search = require('./components/search');
 
 var ROUTES = {
     signin: Signin,
@@ -16,7 +16,7 @@ var ROUTES = {
 
 module.exports = React.createClass({
     componentWillMount: function () {
-        Parse.initialize();
+        Parse.initialize("dMbiGYUIGQS5MLGvcLa4JgTcfkrVzQMqaUMbAz3O","isbWezgVVCJy9WhokxvEhZVl2Q15Ovu3Nq8uqzGB");
     },
     renderScene: function (route, navigator) {
         var Component = ROUTES[signin];

@@ -6,7 +6,7 @@ var {
     TextInput
     } = React;
 var Parse = require('parse/react-native');
-var Button = require('./src/common/button');
+var Button = require('../common/button');
 
 module.exports = React.createClass({
     getInitialState: function () {
@@ -25,12 +25,12 @@ module.exports = React.createClass({
                 <Text style={styles.label}>Username:</Text>
                 <TextInput style={styles.input}
                            value={this.state.username}
-                           onChangetext={(text)=>this.setState({username: text})}
+                           onChangeText={(text)=>this.setState({username: text})}
                 />
 
                 <Text style={styles.label}>Password:</Text>
                 <TextInput style={styles.input}
-                           secureEntrytext={true}
+                           secureEntryText={true}
                            value={this.state.password}
                            onChangeText={(text)=>this.setState({password: text})}
                 />
