@@ -15,7 +15,7 @@ module.exports = React.createClass({
             password: '',
             email: '',
             errorMessage: ''
-        }
+        };
     },
     render: function () {
         return (
@@ -25,14 +25,14 @@ module.exports = React.createClass({
                 <TextInput style={styles.input}
                            value={this.state.username}
                            onChangeText={(text)=>this.setState({username: text})}
-                />
+                    />
 
                 <Text style={styles.label}>Parol</Text>
                 <TextInput style={styles.input}
                            secureTextEntry={true}
                            value={this.state.password}
                            onChangeText={(text)=>this.setState({password: text})}
-                />
+                    />
 
                 <Text style={styles.label}>{this.state.errorMessage}</Text>
                 <Button text={'Iceri gir'} onPress={this.onPress}/>
@@ -46,8 +46,12 @@ module.exports = React.createClass({
     },
     onPress: function () {
         Parse.User.logIn(this.state.username, this.state.password, {
-            success:(user)=> { this.props.navigator.immediatelyResetRouteStack([{name: 'search'}]);},
-            error:(data, error)=> {this.setState({errorMessage: error.message});}
+            success: (user)=> {
+                this.props.navigator.immediatelyResetRouteStack([{name: 'search'}]);
+            },
+            error: (data, error)=> {
+                this.setState({errorMessage: error.message});
+            }
         });
     }
 });

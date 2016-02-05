@@ -16,19 +16,19 @@ var ROUTES = {
 
 module.exports = React.createClass({
     componentWillMount: function () {
-        Parse.initialize("dMbiGYUIGQS5MLGvcLa4JgTcfkrVzQMqaUMbAz3O", "isbWezgVVCJy9WhokxvEhZVl2Q15Ovu3Nq8uqzGB");
+        Parse.initialize("dMbiGYUIGQS5MLGvcLa4JgTcfkrVzQMqaUMbAz3O","isbWezgVVCJy9WhokxvEhZVl2Q15Ovu3Nq8uqzGB");
     },
     renderScene: function (route, navigator) {
-        var Component = ROUTES['signin'];
+        var Component = ROUTES[route.name];
         return <Component route={route} navigator={navigator}/>;
     },
     render: function () {
         return (
             <Navigator
             style={styles.container}
-            initialRoute={{name:'signin'}}
+            initialRoute={{name: 'signin'}}
             renderScene={this.renderScene}
-            configureScene={()=>{return Navigator.SceneConfigs.FloatFromLeft;}}
+            configureScene={() => {return Navigator.SceneConfigs.FloatFromLeft;}}
             />);
     }
 });

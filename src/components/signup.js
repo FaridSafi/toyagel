@@ -20,7 +20,6 @@ module.exports = React.createClass({
     render: function () {
         return (
             <View style={styles.container}>
-                <Text>Registraciya</Text>
 
                 <Text style={styles.label}>Lakamyn</Text>
                 <TextInput
@@ -47,26 +46,34 @@ module.exports = React.createClass({
         user.set('username', this.state.username);
         user.set('password', this.state.password);
 
-        user.signUp(null,{
-            succes: (user) => {this.props.navigator.immediatelyResetRouteStack({name: 'search'}); },
-            error: (user, error) => {this.setState({errorMessage: error.message});}
+        user.signUp({
+            succes: (user) => {
+                this.props.navigator.immediatelyResetRouteStack([{name: 'search'}]);
+            },
+            error: (user, error) => {
+                this.setState({errorMessage: error.message});
+            }
         });
     }
 });
 
 var styles = StyleSheet.create({
     container: {
-        flex: 1
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     label: {
-        alignItems: 'center',
-        justifyContent: 'center',
-        borderColor: 'gray',
-        width: 40
+        fontSize: 18
     },
     input: {
-        alignItems: 'center',
-        justifyContent: 'center',
-
+        padding: 4,
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        borderRadius: 5,
+        margin: 5,
+        width: 200,
+        alignSelf: 'center'
     }
 });
