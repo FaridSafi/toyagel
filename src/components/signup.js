@@ -13,6 +13,7 @@ module.exports = React.createClass({
         return {
             username: '',
             password: '',
+            passwordConfirmation: '',
             email: '',
             errorMessage: ''
         };
@@ -26,7 +27,14 @@ module.exports = React.createClass({
                     style={styles.input}
                     value={this.state.username}
                     onChangeText={(text) => this.setState({username: text})}
-                    />
+                />
+
+                <Text style={styles.label}>Email</Text>
+                <TextInput
+                    style={styles.input}
+                    value={this.state.email}
+                    onChangetext={(text) => this.setState({email: text})}
+                />
 
                 <Text>Parol</Text>
                 <TextInput
@@ -35,13 +43,29 @@ module.exports = React.createClass({
                     value={this.state.password}
                     onChangeText={(text) => this.setState({password: text})}
 
-                    />
-                <Button text={'Registraciya'} onPress={this.onSignUpPress}></Button>
+                />
+
+                <Text>Parol yene bir gezek</Text>
+                <TextInput
+                    style={styles.input}
+                    secureTextEntry={true}
+                    value={this.state.passwordConfirmation}
+                    onChangeText={(text) => this.setState({passwordConfirmation: text})}
+
+                />
+
+                <Text style={styles.label}>{this.state.errorMessage}</Text>
+                <Button text={'Registraciya'} onPress={this.onSignUpPress}/>
+                <Button text={'Hasabyma gir'} onPress={this.onSigninPress}/>
 
             </View>
         );
     },
     onSignUpPress: function () {
+
+        if (this.state.password !== this.state.passwordConfirmation) {
+            return this.setState({errorMessage: 'Parolynyz den gelmedi'});
+        }
         var user = new Parse.User();
         user.set('username', this.state.username);
         user.set('password', this.state.password);
@@ -54,6 +78,9 @@ module.exports = React.createClass({
                 this.setState({errorMessage: error.message});
             }
         });
+    },
+    onSigninPress: function () {
+        this.props.navigator.pop();
     }
 });
 

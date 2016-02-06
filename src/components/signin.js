@@ -25,14 +25,21 @@ module.exports = React.createClass({
                 <TextInput style={styles.input}
                            value={this.state.username}
                            onChangeText={(text)=>this.setState({username: text})}
-                    />
+                />
+
+                <Text style={styles.label}>Email</Text>
+                <TextInput
+                    style={styles.input}
+                    value={this.state.email}
+                    onChangeText={(text) => this.setState({email: text})}
+                />
 
                 <Text style={styles.label}>Parol</Text>
                 <TextInput style={styles.input}
                            secureTextEntry={true}
                            value={this.state.password}
                            onChangeText={(text)=>this.setState({password: text})}
-                    />
+                />
 
                 <Text style={styles.label}>{this.state.errorMessage}</Text>
                 <Button text={'Iceri gir'} onPress={this.onPress}/>
