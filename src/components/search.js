@@ -7,7 +7,7 @@ var {
     StyleSheet,
     DatePickerIOS
     } = React;
-
+var CalendarPicker = require('react-native-calendar-picker');
 var Parse = require('parse/react-native');
 
 module.exports = React.createClass({
@@ -40,10 +40,12 @@ module.exports = React.createClass({
 
         return (
             <View style={styles.container}>
-                <Text>{this.state.date}</Text>
-                <DatePickerIOS
-                    date={this.state.date}
-                    mode="date"
+                <Text style={styles.label}>
+                    Welcome back,{username}!
+                </Text>
+
+                <CalendarPicker
+                    selectedDate={this.state.date}
                     onDateChange={this.onDateChange}
                 />
             </View>

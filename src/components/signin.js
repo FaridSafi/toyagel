@@ -22,23 +22,20 @@ module.exports = React.createClass({
             <View style={styles.container}>
 
                 <Text style={styles.label}>Lakamyn</Text>
-                <TextInput style={styles.input}
-                           value={this.state.username}
-                           onChangeText={(text)=>this.setState({username: text})}
-                />
-
-                <Text style={styles.label}>Email</Text>
                 <TextInput
                     style={styles.input}
-                    value={this.state.email}
-                    onChangeText={(text) => this.setState({email: text})}
+                    autoCapitalize='none'
+                    autoCorrect={false}
+                    value={this.state.username}
+                    onChangeText={(text)=>this.setState({username: text})}
                 />
 
                 <Text style={styles.label}>Parol</Text>
-                <TextInput style={styles.input}
-                           secureTextEntry={true}
-                           value={this.state.password}
-                           onChangeText={(text)=>this.setState({password: text})}
+                <TextInput
+                    style={styles.input}
+                    secureTextEntry={true}
+                    value={this.state.password}
+                    onChangeText={(text)=>this.setState({password: text})}
                 />
 
                 <Text style={styles.label}>{this.state.errorMessage}</Text>

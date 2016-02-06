@@ -25,20 +25,17 @@ module.exports = React.createClass({
                 <Text style={styles.label}>Lakamyn</Text>
                 <TextInput
                     style={styles.input}
+                    autoCapitalize="none"
+                    autoCorrect={false}
                     value={this.state.username}
                     onChangeText={(text) => this.setState({username: text})}
                 />
 
-                <Text style={styles.label}>Email</Text>
-                <TextInput
-                    style={styles.input}
-                    value={this.state.email}
-                    onChangetext={(text) => this.setState({email: text})}
-                />
 
                 <Text>Parol</Text>
                 <TextInput
                     style={styles.input}
+                    autoCorrect={false}
                     secureTextEntry={true}
                     value={this.state.password}
                     onChangeText={(text) => this.setState({password: text})}
@@ -55,13 +52,13 @@ module.exports = React.createClass({
                 />
 
                 <Text style={styles.label}>{this.state.errorMessage}</Text>
-                <Button text={'Registraciya'} onPress={this.onSignUpPress}/>
+                <Button text={'Registraciya'} onPress={this.onSignupPress}/>
                 <Button text={'Hasabyma gir'} onPress={this.onSigninPress}/>
 
             </View>
         );
     },
-    onSignUpPress: function () {
+    onSignupPress: function () {
 
         if (this.state.password !== this.state.passwordConfirmation) {
             return this.setState({errorMessage: 'Parolynyz den gelmedi'});
@@ -69,6 +66,8 @@ module.exports = React.createClass({
         var user = new Parse.User();
         user.set('username', this.state.username);
         user.set('password', this.state.password);
+
+        //var currentUser = Parse.User.current();
 
         user.signUp({
             succes: (user) => {
