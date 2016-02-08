@@ -7,11 +7,13 @@ var Parse = require("parse/react-native");
 var Signin = require('./components/signin');
 var Signup = require('./components/signup');
 var Search = require('./components/search');
+var Messenger = require('./components/messenger');
 
 var ROUTES = {
     signin: Signin,
     signup: Signup,
-    search: Search
+    search: Search,
+    messenger:Messenger
 };
 
 module.exports = React.createClass({

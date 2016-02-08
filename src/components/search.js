@@ -45,8 +45,8 @@ module.exports = React.createClass({
             <View style={styles.container}>
 
                 <Image style={styles.imageHolder}
-                        source={require('../common/images/bilbil_owezowa.png')}
-                />
+                       source={require('../common/images/bilbil_owezowa.png')}
+                    />
 
                 <Text style={styles.label}>
                     Bilbil Owezowa
@@ -55,17 +55,19 @@ module.exports = React.createClass({
                 <CalendarPicker
                     selectedDate={this.state.date}
                     onDateChange={this.onDateChange}
-                />
+                    />
 
-                <Button text={'Doly'} style={styles.buttonStyle}/>
-
+                <Button text={'Habarlas'} onPress={this.onPress}/>
             </View>
 
 
         );
     },
-    onSignoutPress: function(){
+    onSignoutPress: function () {
         Parse.User.logOut();
+    },
+    onPress: function () {
+        this.props.navigator.push({name:'messenger'});
     }
 })
 ;
@@ -79,12 +81,19 @@ var styles = StyleSheet.create({
     label: {
         fontSize: 18
     },
-    imageHolder:{
-        height:200,
-        width:200
+    imageHolder: {
+        height: 200,
+        width: 200
     },
-    buttonStyle:{
-        color:'#ff0000'
+    contact: {
+        borderColor: 'black',
+        borderWidth: 1,
+        borderRadius: 5,
+        padding: 5,
+        marginTop: 10,
+    },
+    availableDates: {
+        color: 'green'
     }
 
 });
