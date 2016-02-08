@@ -5,10 +5,13 @@ var {
     TextInput,
     Platform,
     StyleSheet,
-    DatePickerIOS
+    Button,
+    Image
     } = React;
 var CalendarPicker = require('react-native-calendar-picker');
 var Parse = require('parse/react-native');
+var Button = require('../common/button');
+
 
 module.exports = React.createClass({
     getDefaultProps: function () {
@@ -40,14 +43,21 @@ module.exports = React.createClass({
 
         return (
             <View style={styles.container}>
+
+                <Image style={styles.imageHolder}
+                        source={require('../common/images/bilbil_owezowa.png')}
+                />
+
                 <Text style={styles.label}>
-                    Welcome back,{username}!
+                    Bilbil Owezowa
                 </Text>
 
                 <CalendarPicker
                     selectedDate={this.state.date}
                     onDateChange={this.onDateChange}
                 />
+
+                <Button text={'Doly'} style={styles.buttonStyle}/>
 
             </View>
 
@@ -68,5 +78,13 @@ var styles = StyleSheet.create({
     },
     label: {
         fontSize: 18
+    },
+    imageHolder:{
+        height:200,
+        width:200
+    },
+    buttonStyle:{
+        color:'#ff0000'
     }
+
 });
