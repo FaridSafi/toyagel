@@ -48,8 +48,14 @@ module.exports = React.createClass({
                     selectedDate={this.state.date}
                     onDateChange={this.onDateChange}
                 />
+
             </View>
+
+
         );
+    },
+    onSignoutPress: function(){
+        Parse.User.logOut();
     }
 })
 ;

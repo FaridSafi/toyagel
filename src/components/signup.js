@@ -67,8 +67,6 @@ module.exports = React.createClass({
         user.set('username', this.state.username);
         user.set('password', this.state.password);
 
-        //var currentUser = Parse.User.current();
-
         user.signUp({
             succes: (user) => {
                 this.props.navigator.immediatelyResetRouteStack([{name: 'search'}]);

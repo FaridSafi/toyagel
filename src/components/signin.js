@@ -48,16 +48,17 @@ module.exports = React.createClass({
     onSignUpPress: function () {
         this.props.navigator.push({name: 'signup'});
     },
-    onPress: function () {
-        Parse.User.logIn(this.state.username, this.state.password, {
-            success: (user)=> {
-                this.props.navigator.immediatelyResetRouteStack([{name: 'search'}]);
-            },
-            error: (data, error)=> {
-                this.setState({errorMessage: error.message});
-            }
-        });
-    }
+    onPress: function (){
+        {
+            Parse.User.logIn(this.state.username, this.state.password, {
+                success: (user)=> {
+                    this.props.navigator.immediatelyResetRouteStack([{name: 'search'}]);
+                },
+                error: (data, error)=> {
+                    this.setState({errorMessage: error.message});
+                }
+            });
+        }    }
 });
 
 var styles = StyleSheet.create({
