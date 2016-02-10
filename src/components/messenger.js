@@ -10,25 +10,35 @@ var {
 
 var GiftedMessenger = require('react-native-gifted-messenger');
 var Communications = require('react-native-communications');
+var Parse= require('parse/react-native');
 
 
 var GiftedMessengerExample = React.createClass({
+    getInitialState: function(){
+        return{
+            text : 'Salam'
+        }
+    },
 
     getMessages() {
         return [
             {
-                text: 'Are you building a chat app?',
+                text: 'Salam',
+                //userID:this.props.get('username'),
                 name: 'Bilbil Owezowa',
-                image: {uri: 'https://facebook.github.io/react/img/logo_og.png'},
+                image: require('../common/images/bilbil_owezowa.png'),
                 position: 'left',
-                date: new Date(2015, 10, 16, 19, 0)
+                date: new Date(),
+                messageId: new Date(),
+                userId: Parse.User.getUsername(),
+                text: console.log(userId)
             },
             {
-                text: "Yes, and I use Gifted Messenger!",
-                name: 'Developer',
+                text: "Bos gununiz bar my ?",
+                name: 'Anew Galasy',
                 image: null,
                 position: 'right',
-                date: new Date(2015, 10, 17, 19, 0)
+                date: new Date()
                 // If needed, you can add others data (eg: userId, messageId)
             },
         ];

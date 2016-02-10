@@ -57,17 +57,21 @@ module.exports = React.createClass({
                     onDateChange={this.onDateChange}
                     />
 
+                <Button text={'Cyk'} onPress={this.onLogoutPress}/>
+
                 <Button text={'Habarlas'} onPress={this.onPress}/>
             </View>
 
 
         );
     },
-    onSignoutPress: function () {
-        Parse.User.logOut();
+    onLogoutPress: function () {
+        //Parse.User.logOut();
+        console.log('I reached here !!!')
+        this.props.navigator.immediatelyResetRouteStack([{name: 'signin'}]);
     },
     onPress: function () {
-        this.props.navigator.push({name:'messenger'});
+        this.props.navigator.push({name: 'messenger'});
     }
 })
 ;
