@@ -10,28 +10,45 @@ var {
 
 var GiftedMessenger = require('react-native-gifted-messenger');
 var Communications = require('react-native-communications');
-var Parse= require('parse/react-native');
+var Parse = require('parse/react-native');
 
 
 var GiftedMessengerExample = React.createClass({
-    getInitialState: function(){
-        return{
-            text : 'Salam'
+    getInitialState: function () {
+        return {
+            greeting: 'Salam',
+            artistName: '',
+            errorMessage: ''
+
         }
+    },
+
+    getArtist: function () {
+        var Artist = Parse.Object.extend('Artist');
+        var artist = new Artist();
+
+        var User = Parse.Object.extend('User');
+        var query = Parse.Query(User);
+        query.equalTo('username', 'bilbil');
+        query.get('6yCeF80qWf', {
+            success: (user) => {
+                this.setState({artistName: user});
+            },
+            error: (data, error) => {
+                this.setState({errorMessage: error.message});
+            }
+        });
     },
 
     getMessages() {
         return [
             {
-                text: 'Salam',
-                //userID:this.props.get('username'),
-                name: 'Bilbil Owezowa',
+                text: this.state.greeting,
+                name: this.getArtist(),
                 image: require('../common/images/bilbil_owezowa.png'),
                 position: 'left',
                 date: new Date(),
-                messageId: new Date(),
-                userId: Parse.User.getUsername(),
-                text: console.log(userId)
+                messageId: new Date()
             },
             {
                 text: "Bos gununiz bar my ?",
