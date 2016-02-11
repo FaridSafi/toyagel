@@ -23,27 +23,28 @@ var GiftedMessengerExample = React.createClass({
         }
     },
 
-    getArtist: function() {
+    getArtist: function () {
         var User = Parse.Object.extend('User');
         var query = new Parse.Query(User);
-        return (
-            //query.equalTo('username', 'bilbil');
-            query.get('6yCeF80qWf', {
-                success: (user) => {
+        query.equalTo('username', 'bilbil');
+        query.find({
+            success: (results) => {
+                for (var i = 0; i < results.length; i++) {
+                    var user = results[i];
                     this.setState({artistName: user.get('Name')});
-                },
-                error: (data, error) => {
-                    this.setState({errorMessage: error.message});
                 }
-            })
-        );
+            },
+            error: (data, error) => {
+                this.setState({errorMessage: error.message});
+            }
+        })
     },
 
     getMessages() {
         return [
             {
                 text: this.state.greeting,
-                name: this.getArtist(),
+                name: this.state.artistName,
                 image: require('../common/images/bilbil_owezowa.png'),
                 position: 'left',
                 date: new Date(),
@@ -154,6 +155,7 @@ var GiftedMessengerExample = React.createClass({
                 onLoadEarlierMessages={this.onLoadEarlierMessages}
 
                 senderName='Developer'
+                artistName={this.getArtist()}
                 senderImage={null}
                 onImagePress={this.onImagePress}
                 displayNames={true}
