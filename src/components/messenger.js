@@ -23,21 +23,20 @@ var GiftedMessengerExample = React.createClass({
         }
     },
 
-    getArtist: function () {
-        var Artist = Parse.Object.extend('Artist');
-        var artist = new Artist();
-
+    getArtist: function() {
         var User = Parse.Object.extend('User');
-        var query = Parse.Query(User);
-        query.equalTo('username', 'bilbil');
-        query.get('6yCeF80qWf', {
-            success: (user) => {
-                this.setState({artistName: user});
-            },
-            error: (data, error) => {
-                this.setState({errorMessage: error.message});
-            }
-        });
+        var query = new Parse.Query(User);
+        return (
+            //query.equalTo('username', 'bilbil');
+            query.get('6yCeF80qWf', {
+                success: (user) => {
+                    this.setState({artistName: user.get('Name')});
+                },
+                error: (data, error) => {
+                    this.setState({errorMessage: error.message});
+                }
+            })
+        );
     },
 
     getMessages() {
@@ -165,7 +164,7 @@ var GiftedMessengerExample = React.createClass({
                 handleEmailPress={this.handleEmailPress}
 
                 inverted={true}
-                />
+            />
 
         );
     },
