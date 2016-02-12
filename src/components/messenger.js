@@ -29,10 +29,7 @@ var GiftedMessengerExample = React.createClass({
         query.equalTo('username', 'bilbil');
         query.find({
             success: (results) => {
-                for (var i = 0; i < results.length; i++) {
-                    var user = results[i];
-                    this.setState({artistName: user.get('Name')});
-                }
+                this.setState({artistName: results.get('Name')});
             },
             error: (data, error) => {
                 this.setState({errorMessage: error.message});
@@ -47,17 +44,16 @@ var GiftedMessengerExample = React.createClass({
                 name: this.state.artistName,
                 image: require('../common/images/bilbil_owezowa.png'),
                 position: 'left',
-                date: new Date(),
-                messageId: new Date()
-            },
-            {
-                text: "Bos gununiz bar my ?",
-                name: 'Anew Galasy',
-                image: null,
-                position: 'right',
                 date: new Date()
-                // If needed, you can add others data (eg: userId, messageId)
-            },
+            }
+            //{
+            //    text: "Bos gununiz bar my ?",
+            //    name: 'Anew Galasy',
+            //    image: null,
+            //    position: 'right',
+            //    date: new Date()
+                //If needed, you can add others data (eg: userId, messageId)
+            //},
         ];
     },
 
