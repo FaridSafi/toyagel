@@ -5,7 +5,6 @@ var {
     TextInput,
     Platform,
     StyleSheet,
-    Button,
     Image
     } = React;
 var CalendarPicker = require('react-native-calendar-picker');

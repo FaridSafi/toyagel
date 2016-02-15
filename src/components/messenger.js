@@ -17,53 +17,78 @@ var GiftedMessengerExample = React.createClass({
     getInitialState: function () {
         return {
             greeting: 'Salam',
-            artistName: '',
-            errorMessage: ''
+            date: new Date(),
+            errorMessage: '',
+            user:null,
+            artistId: ''
 
         }
     },
-
-    getArtist: function () {
+    componentWillMount:function(){
+      Parse.User.currentAsync().then((user) => {
+          this.setState({user: user})
+      }
+      )
+    },
+ /*   getArtist: function () {
         var User = Parse.Object.extend('User');
+        var artist = new User();
         var query = new Parse.Query(User);
         query.equalTo('username', 'bilbil');
-        query.find({
+        query.first({
             success: (results) => {
-                this.setState({artistName: results.get('Name')});
+                this.setState({artistName: results.get('name')});
+                this.setState({artistId: artist.id});
+                console.log(results);
             },
             error: (data, error) => {
                 this.setState({errorMessage: error.message});
             }
-        })
-    },
+        });
+        //return this.state.artistName
+    },*/
 
     getMessages() {
         return [
             {
                 text: this.state.greeting,
-                name: this.state.artistName,
+                name: 'Bilbil Owezowa',
                 image: require('../common/images/bilbil_owezowa.png'),
                 position: 'left',
                 date: new Date()
-            }
-            //{
-            //    text: "Bos gununiz bar my ?",
-            //    name: 'Anew Galasy',
-            //    image: null,
-            //    position: 'right',
-            //    date: new Date()
+                //messageId: this.state.artistId + date
+            },
+            {
+                text: "Bos gununiz bar my ?",
+                name: this.state.user,
+                image: null,
+                position: 'right',
+                date: new Date()
                 //If needed, you can add others data (eg: userId, messageId)
-            //},
+            },
         ];
     },
 
     handleSend(message = {}, rowID = null) {
         // Your logic here
         // Send message.text to your server
+        var Message = Parse.Object.extend('Message');
+        var chat = new Message();
+        chat.set('message', message.text);
+        chat.set('from',this.state.user.id)
+        chat.set('to', "6yCeF80qWf");
+        chat.save(null, {
+            success: (chat) => {
+                console.log('Message saved' + message.text)
+            },
+            error: (chat, error) => {
+                console.log(error.message)
+            }
+        });
 
-        // this._GiftedMessenger.setMessageStatus('Sent', rowID);
-        // this._GiftedMessenger.setMessageStatus('Seen', rowID);
-        // this._GiftedMessenger.setMessageStatus('Custom label status', rowID);
+         this._GiftedMessenger.setMessageStatus('Sent', rowID);
+         this._GiftedMessenger.setMessageStatus('Seen', rowID);
+         this._GiftedMessenger.setMessageStatus('Custom label status', rowID);
         this._GiftedMessenger.setMessageStatus('ErrorButton', rowID); // => In this case, you need also to set onErrorButtonPress
     },
 
@@ -151,7 +176,6 @@ var GiftedMessengerExample = React.createClass({
                 onLoadEarlierMessages={this.onLoadEarlierMessages}
 
                 senderName='Developer'
-                artistName={this.getArtist()}
                 senderImage={null}
                 onImagePress={this.onImagePress}
                 displayNames={true}
