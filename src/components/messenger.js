@@ -19,34 +19,36 @@ var GiftedMessengerExample = React.createClass({
             greeting: 'Salam',
             date: new Date(),
             errorMessage: '',
-            user:null,
-            artistId: ''
+            user: null,
+            artistId: '',
+            olderMessageText: [],
+            olderMessageDate: []
 
         }
     },
-    componentWillMount:function(){
-      Parse.User.currentAsync().then((user) => {
-          this.setState({user: user})
-      }
-      )
-    },
- /*   getArtist: function () {
-        var User = Parse.Object.extend('User');
-        var artist = new User();
-        var query = new Parse.Query(User);
-        query.equalTo('username', 'bilbil');
-        query.first({
-            success: (results) => {
-                this.setState({artistName: results.get('name')});
-                this.setState({artistId: artist.id});
-                console.log(results);
-            },
-            error: (data, error) => {
-                this.setState({errorMessage: error.message});
+    componentWillMount: function () {
+        Parse.User.currentAsync().then((user) => {
+                this.setState({user: user})
             }
-        });
-        //return this.state.artistName
-    },*/
+        )
+    },
+    /*   getArtist: function () {
+     var User = Parse.Object.extend('User');
+     var artist = new User();
+     var query = new Parse.Query(User);
+     query.equalTo('username', 'bilbil');
+     query.first({
+     success: (results) => {
+     this.setState({artistName: results.get('name')});
+     this.setState({artistId: artist.id});
+     console.log(results);
+     },
+     error: (data, error) => {
+     this.setState({errorMessage: error.message});
+     }
+     });
+     //return this.state.artistName
+     },*/
 
     getMessages() {
         return [
@@ -75,20 +77,21 @@ var GiftedMessengerExample = React.createClass({
         var Message = Parse.Object.extend('Message');
         var chat = new Message();
         chat.set('message', message.text);
-        chat.set('from',this.state.user.id)
+        chat.set('from', this.state.user.id);
         chat.set('to', "6yCeF80qWf");
         chat.save(null, {
             success: (chat) => {
-                console.log('Message saved' + message.text)
+                this.setState(older);
+                console.log('Message saved :' + message.text)
             },
             error: (chat, error) => {
                 console.log(error.message)
             }
         });
 
-         this._GiftedMessenger.setMessageStatus('Sent', rowID);
-         this._GiftedMessenger.setMessageStatus('Seen', rowID);
-         this._GiftedMessenger.setMessageStatus('Custom label status', rowID);
+        this._GiftedMessenger.setMessageStatus('Sent', rowID);
+        this._GiftedMessenger.setMessageStatus('Seen', rowID);
+        this._GiftedMessenger.setMessageStatus('Custom label status', rowID);
         this._GiftedMessenger.setMessageStatus('ErrorButton', rowID); // => In this case, you need also to set onErrorButtonPress
     },
 
@@ -98,23 +101,42 @@ var GiftedMessengerExample = React.createClass({
 
         // Your logic here
         // Eg: Retrieve old messages from your server
-
+        var Message = Parse.Object.extend('Message');
+        var query = new Parse.Query(Message);
+        query.equalTo('from', this.state.user.id);
+        query.limit(10);
+        query.descending('createdAt');
+        query.find({
+            success: (result) => {
+                for (var i = 0; i , result.length; i++) {
+                    this.setState({olderMessageText: result[i].get('message')});
+                    this.setState({olderMessageDate: result[i].get('createdAt')});
+                    console.log('Messages ' + this.state.olderMessageText + this.state.olderMessageDate);
+                }
+            },
+            error: (data, error) => {
+                console.log('Error occured : ' + error.message)
+            }
+        });
         // newest messages have to be at the begining of the array
+
+
         var earlierMessages = [
             {
-                text: 'This is a touchable phone number 0606060606 parsed by taskrabbit/react-native-parsed-text',
+                text: 'Hello',
                 name: 'Developer',
                 image: null,
                 position: 'right',
-                date: new Date(2014, 0, 1, 20, 0),
+                date: new Date(2014, 0, 1, 20, 0)
             }, {
                 text: 'React Native enables you to build world-class application experiences on native platforms using a consistent developer experience based on JavaScript and React. https://github.com/facebook/react-native',
                 name: 'React-Native',
                 image: {uri: 'https://facebook.github.io/react/img/logo_og.png'},
                 position: 'left',
-                date: new Date(2013, 0, 1, 12, 0),
-            },
+                date: new Date(2013, 0, 1, 12, 0)
+            }
         ];
+
 
         setTimeout(() => {
             callback(earlierMessages, false); // when second parameter is true, the "Load earlier messages" button will be hidden
