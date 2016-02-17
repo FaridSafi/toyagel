@@ -109,14 +109,14 @@ var GiftedMessengerExample = React.createClass({
         // Eg: Retrieve old messages from your server
 
         var Message = Parse.Object.extend('Message');
-        var query = new Parse.Query(Message);
+        var queryFrom = new Parse.Query(Message);
         //query.equalTo('from', this.state.user.id);
 
-        query.equalTo('from', 'pnLutiFVZy'); // from salam
-        //query.equalTo('to', '6yCeF80qWf'); // to bagsy
-        query.limit(10);
-        query.descending('createdAt');
-        query.find({
+        queryFrom.equalTo('from', 'pnLutiFVZy'); // from salam
+        queryFrom.equalTo('to', '6yCeF80qWf'); // to bagsy
+        queryFrom.descending('createdAt');
+        queryFrom.limit(100);
+        queryFrom.find({
             success: (result) => {
                 for (var i = 0; i , result.length; i++) {
                     this.setState({olderMessageTextFrom: result[i].get('message')});
@@ -130,13 +130,6 @@ var GiftedMessengerExample = React.createClass({
                             image: null,
                             position: 'right',
                             date: this.state.olderMessageDateFrom
-                        }, {
-                            //text: this.state.olderMessageTextTo,
-                            text: "Bagsy yagsy",
-                            name: 'Bilbil',
-                            image: {uri: 'https://facebook.github.io/react/img/logo_og.png'},
-                            position: 'left',
-                            date: new Date(2013, 0, 1, 12, 0)
                         }
                     );
 
@@ -147,43 +140,33 @@ var GiftedMessengerExample = React.createClass({
             }
         });
 
-/*        query.equalTo('from', '6yCeF80qWf');
-        query.equalTo('to', 'pnLutiFVZy');
-        query.find({
+        var queryTo = new Parse.Query(Message);
+
+        queryTo.equalTo('from', '6yCeF80qWf');
+        queryTo.equalTo('to', 'pnLutiFVZy');
+        queryTo.descending('createdAt');
+        queryTo.limit(100);
+        queryTo.find({
             success: (result) => {
                 for (var i = 0; i < result.length; i++) {
                     this.setState({olderMessageTextTo: result[i].get('message')});
                     this.setState({olderMessageDateTo: result[i].get('createdAt')});
 
-
+                    earlierMessages.push({
+                            text: this.state.olderMessageTextTo,
+                            name: 'Bilbil',
+                            image: {uri: 'https://facebook.github.io/react/img/logo_og.png'},
+                            position: 'left',
+                            date: this.state.olderMessageDateTo
+                        }
+                    );
 
                 }
             },
             error: (data, error) => {
                 console.log('Error occurred : ' + error.message)
             }
-        });*/
-
-
-
-        // newest messages have to be at the begining of the array
-
-        /*var earlierMessages = [
-         {
-         text: "Babu",
-         name: this.state.user,
-         image: null,
-         position: 'right',
-         date: new Date(2014, 0, 1, 20, 0)
-         }, {
-         text: 'Babu bu vu vuvu',
-         name: this.state.user,
-         image: {uri: 'https://facebook.github.io/react/img/logo_og.png'},
-         position: 'left',
-         date: new Date(2013, 0, 1, 12, 0)
-         }
-         ];*/
-
+        });
 
         setTimeout(() => {
             callback(earlierMessages, false); // when second parameter is true, the "Load earlier messages" button will be hidden
