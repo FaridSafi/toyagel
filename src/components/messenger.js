@@ -114,15 +114,13 @@ var GiftedMessengerExample = React.createClass({
 
         queryFrom.equalTo('from', 'pnLutiFVZy'); // from salam
         queryFrom.equalTo('to', '6yCeF80qWf'); // to bagsy
-        queryFrom.descending('createdAt');
+        //queryFrom.descending('createdAt');
         queryFrom.limit(100);
         queryFrom.find({
             success: (result) => {
                 for (var i = 0; i , result.length; i++) {
                     this.setState({olderMessageTextFrom: result[i].get('message')});
                     this.setState({olderMessageDateFrom: result[i].get('createdAt')});
-                    console.log('Messages ' + this.state.olderMessageTextFrom + '\n' + this.state.olderMessageDateFrom);
-
 
                     earlierMessages.push({
                             text: this.state.olderMessageTextFrom,
@@ -132,8 +130,8 @@ var GiftedMessengerExample = React.createClass({
                             date: this.state.olderMessageDateFrom
                         }
                     );
-
                 }
+
             },
             error: (data, error) => {
                 console.log('Error occurred : ' + error.message)
@@ -169,6 +167,10 @@ var GiftedMessengerExample = React.createClass({
         });
 
         setTimeout(() => {
+            earlierMessages.sort(function (a, b) {
+                return a.date > b.date ? -1 : a < b ? 1 : 0;
+            });
+
             callback(earlierMessages, false); // when second parameter is true, the "Load earlier messages" button will be hidden
         }, 1000);
     },
@@ -238,7 +240,7 @@ var GiftedMessengerExample = React.createClass({
                 handleEmailPress={this.handleEmailPress}
 
                 inverted={true}
-                />
+            />
 
         );
     },
