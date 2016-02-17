@@ -21,8 +21,12 @@ var GiftedMessengerExample = React.createClass({
             errorMessage: '',
             user: null,
             artistId: '',
-            olderMessageText: [],
-            olderMessageDate: []
+            olderMessageTextFrom: [],
+            olderMessageTextTo: [],
+            olderMessageDateFrom: [],
+            olderMessageDateTo: [],
+            earlierMessages: []
+
 
         }
     },
@@ -99,43 +103,86 @@ var GiftedMessengerExample = React.createClass({
     onLoadEarlierMessages(oldestMessage = {}, callback = () => {
     }) {
 
+        var earlierMessages = []
+
         // Your logic here
         // Eg: Retrieve old messages from your server
+
         var Message = Parse.Object.extend('Message');
         var query = new Parse.Query(Message);
-        query.equalTo('from', this.state.user.id);
+        //query.equalTo('from', this.state.user.id);
+
+        query.equalTo('from', 'pnLutiFVZy'); // from salam
+        //query.equalTo('to', '6yCeF80qWf'); // to bagsy
         query.limit(10);
         query.descending('createdAt');
         query.find({
             success: (result) => {
                 for (var i = 0; i , result.length; i++) {
-                    this.setState({olderMessageText: result[i].get('message')});
-                    this.setState({olderMessageDate: result[i].get('createdAt')});
-                    console.log('Messages ' + this.state.olderMessageText + this.state.olderMessageDate);
+                    this.setState({olderMessageTextFrom: result[i].get('message')});
+                    this.setState({olderMessageDateFrom: result[i].get('createdAt')});
+                    console.log('Messages ' + this.state.olderMessageTextFrom + '\n' + this.state.olderMessageDateFrom);
+
+
+                    earlierMessages.push({
+                            text: this.state.olderMessageTextFrom,
+                            name: 'Hossar',
+                            image: null,
+                            position: 'right',
+                            date: this.state.olderMessageDateFrom
+                        }, {
+                            //text: this.state.olderMessageTextTo,
+                            text: "Bagsy yagsy",
+                            name: 'Bilbil',
+                            image: {uri: 'https://facebook.github.io/react/img/logo_og.png'},
+                            position: 'left',
+                            date: new Date(2013, 0, 1, 12, 0)
+                        }
+                    );
+
                 }
             },
             error: (data, error) => {
-                console.log('Error occured : ' + error.message)
+                console.log('Error occurred : ' + error.message)
             }
         });
+
+/*        query.equalTo('from', '6yCeF80qWf');
+        query.equalTo('to', 'pnLutiFVZy');
+        query.find({
+            success: (result) => {
+                for (var i = 0; i < result.length; i++) {
+                    this.setState({olderMessageTextTo: result[i].get('message')});
+                    this.setState({olderMessageDateTo: result[i].get('createdAt')});
+
+
+
+                }
+            },
+            error: (data, error) => {
+                console.log('Error occurred : ' + error.message)
+            }
+        });*/
+
+
+
         // newest messages have to be at the begining of the array
 
-
-        var earlierMessages = [
-            {
-                text: 'Hello',
-                name: 'Developer',
-                image: null,
-                position: 'right',
-                date: new Date(2014, 0, 1, 20, 0)
-            }, {
-                text: 'React Native enables you to build world-class application experiences on native platforms using a consistent developer experience based on JavaScript and React. https://github.com/facebook/react-native',
-                name: 'React-Native',
-                image: {uri: 'https://facebook.github.io/react/img/logo_og.png'},
-                position: 'left',
-                date: new Date(2013, 0, 1, 12, 0)
-            }
-        ];
+        /*var earlierMessages = [
+         {
+         text: "Babu",
+         name: this.state.user,
+         image: null,
+         position: 'right',
+         date: new Date(2014, 0, 1, 20, 0)
+         }, {
+         text: 'Babu bu vu vuvu',
+         name: this.state.user,
+         image: {uri: 'https://facebook.github.io/react/img/logo_og.png'},
+         position: 'left',
+         date: new Date(2013, 0, 1, 12, 0)
+         }
+         ];*/
 
 
         setTimeout(() => {
@@ -208,7 +255,7 @@ var GiftedMessengerExample = React.createClass({
                 handleEmailPress={this.handleEmailPress}
 
                 inverted={true}
-            />
+                />
 
         );
     },
