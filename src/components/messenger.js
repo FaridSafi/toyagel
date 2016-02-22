@@ -36,23 +36,6 @@ var GiftedMessengerExample = React.createClass({
             }
         )
     },
-    /*   getArtist: function () {
-     var User = Parse.Object.extend('User');
-     var artist = new User();
-     var query = new Parse.Query(User);
-     query.equalTo('username', 'bilbil');
-     query.first({
-     success: (results) => {
-     this.setState({artistName: results.get('name')});
-     this.setState({artistId: artist.id});
-     console.log(results);
-     },
-     error: (data, error) => {
-     this.setState({errorMessage: error.message});
-     }
-     });
-     //return this.state.artistName
-     },*/
 
     getMessages() {
         return [
