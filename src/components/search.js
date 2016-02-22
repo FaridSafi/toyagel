@@ -10,6 +10,7 @@ var {
 var CalendarPicker = require('react-native-calendar-picker');
 var Parse = require('parse/react-native');
 var Button = require('../common/button');
+var ResponsiveImage = require('react-native-responsive-image');
 
 
 var Search = React.createClass({
@@ -35,13 +36,14 @@ var Search = React.createClass({
             this.getArtistName();
         },
         getArtistName: function () {
+            var count = this.state.artistUserId;
             var query = new Parse.Query(Parse.User);
-            query.equalTo('userId', this.state.artistUserId);
+            query.equalTo('userId', count);
             return query.first({
                 success: (result) => {
                     this.setState({artistName: result.get('name')});
-                    this.setState({imagePath: '../common/images/' + this.state.artistUserId + '.png'});
-                    console.log("Number : " + this.state.artistUserId);
+                    this.setState({imagePath: '../common/images/' + count + '.png'});
+                    console.log("Number : " + count);
                 },
                 error: (data, error) => {
                     console.log('Error occured : ' + error.message())
@@ -93,21 +95,21 @@ var Search = React.createClass({
                 <View style={styles.container}>
 
 
-                    <Image style={styles.imageHolder}
-                           source={require('../common/images/1.png')}
-                        />
+                    <ResponsiveImage source={require('../common/images/1.png')} initHeight="200" initWidth="200"/>
+
 
                     <Text style={styles.label}>
                         {this.state.artistName}
                     </Text>
 
-                    <Button text={'Next'} onPress={this.getNextArtistName}/>
-                    <Button text={'Previous'} onPress={this.getPreviousArtistName}/>
-
+                    <View style={styles.innerButtonView}>
+                        <Button text={'Indiki'} onPress={this.getNextArtistName}/>
+                        <Button text={'Onki'} onPress={this.getPreviousArtistName}/>
+                    </View>
                     <CalendarPicker
                         selectedDate={this.state.date}
                         onDateChange={this.onDateChange}
-                        />
+                    />
 
                     <Button text={'Cyk'} onPress={this.onLogoutPress}/>
 
@@ -139,17 +141,25 @@ var styles = StyleSheet.create({
     },
     imageHolder: {
         height: 200,
-        width: 100
+        width: 200
     },
     contact: {
         borderColor: 'black',
         borderWidth: 1,
         borderRadius: 5,
         padding: 5,
-        marginTop: 10,
+        marginTop: 10
     },
     availableDates: {
         color: 'green'
+    },
+    nextPreviousButton: {
+        width: 20
+    },
+    innerButtonView: {
+        flexDirection: 'row',
+        justifyContent:'space-between'
+
     }
 
 });
