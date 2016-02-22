@@ -8,7 +8,6 @@ var {
     Image
     } = React;
 var CalendarPicker = require('react-native-calendar-picker');
-//var CalendarPicker = require('rn.daterangepicker');
 var Parse = require('parse/react-native');
 var Button = require('../common/button');
 
@@ -24,6 +23,7 @@ var Search = React.createClass({
                 date: this.props.date,
                 artistName: '',
                 artistUserId: 1,
+                imagePath: '../common/images/1.png',
                 user: null
             }
         },
@@ -37,11 +37,11 @@ var Search = React.createClass({
         getArtistName: function () {
             var query = new Parse.Query(Parse.User);
             query.equalTo('userId', this.state.artistUserId);
-            //query.equalTo('objectId', '6yCeF80qWf');
             return query.first({
                 success: (result) => {
                     this.setState({artistName: result.get('name')});
-                    console.log("WOOOHOOOOO " + result.get('name'));
+                    this.setState({imagePath: '../common/images/' + this.state.artistUserId + '.png'});
+                    console.log("Number : " + this.state.artistUserId);
                 },
                 error: (data, error) => {
                     console.log('Error occured : ' + error.message())
@@ -50,18 +50,32 @@ var Search = React.createClass({
         },
 
         getNextArtistName: function () {
-            this.setState({artistUserId: this.state.artistUserId + 1});
-            this.getArtistName();
+            if (this.state.artistUserId > 0 && this.state.artistUserId < 3) {
+                this.setState({artistUserId: this.state.artistUserId + 1});
+                this.getArtistName();
+            } else {
+                console.log('Reached maximum number of artist entry');
+            }
         },
 
         getPreviousArtistName: function () {
-            if (this.state.artistUserId > 0) {
+            if (this.state.artistUserId > 1 && this.state.artistUserId < 3) {
                 console.log("Number : " + this.state.artistUserId);
                 this.setState({artistUserId: this.state.artistUserId - 1});
-            }else{
+            } else {
                 console.log('Reached to first artist !!!');
                 console.log("Number : " + this.state.artistUserId);
             }
+        },
+        artistInfo: function () {
+            var artist = [];
+            artist.push({
+                name: this.state.artistName,
+                id: this.state.artistUserId,
+                image: this.state.imagePath,
+                bookedDates: new Date()
+            });
+
         },
 
         onDateChange: function (date) {
@@ -78,8 +92,9 @@ var Search = React.createClass({
             return (
                 <View style={styles.container}>
 
+
                     <Image style={styles.imageHolder}
-                           source={require('../common/images/bilbil_owezowa.png')}
+                           source={require('../common/images/1.png')}
                         />
 
                     <Text style={styles.label}>

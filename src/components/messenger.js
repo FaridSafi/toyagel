@@ -20,7 +20,6 @@ var GiftedMessengerExample = React.createClass({
             date: new Date(),
             errorMessage: '',
             user: null,
-            artistId: '',
             olderMessageTextFrom: [],
             olderMessageTextTo: [],
             olderMessageDateFrom: [],
@@ -42,10 +41,9 @@ var GiftedMessengerExample = React.createClass({
             {
                 text: this.state.greeting,
                 name: 'Bilbil Owezowa',
-                image: require('../common/images/bilbil_owezowa.png'),
+                image: require('../common/images/1.png'),
                 position: 'left',
                 date: new Date()
-                //messageId: this.state.artistId + date
             },
             {
                 text: "Bos gununiz bar my ?",
