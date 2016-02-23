@@ -24,6 +24,7 @@ var Search = React.createClass({
                 date: this.props.date,
                 artistName: '',
                 artistUserId: 1,
+                maxNoArtist: 0,
                 imagePath: '../common/images/1.png',
                 user: null
             }
@@ -34,16 +35,30 @@ var Search = React.createClass({
             });
 
             this.getArtistName();
+            this.getMaxNoArtist();
         },
-        getArtistName: function () {
-            var count = this.state.artistUserId;
+        getMaxNoArtist: function () {
             var query = new Parse.Query(Parse.User);
-            query.equalTo('userId', count);
+            query.equalTo('userType', 'artist');
+            query.count({
+                success: (outcome)=> {
+                    this.setState({maxNoArtist: outcome});
+                    console.log('Maximum number of Artist : ' + this.state.maxNoArtist);
+                },
+                error: (data, error)=> {
+                    console.log('Could not retrieve maximum number of artists : ' + error.message())
+                }
+            });
+        }
+        ,
+        getArtistName: function () {
+            var artist = [];
+            var query = new Parse.Query(Parse.User);
+            query.equalTo('userId', this.state.artistUserId);
             return query.first({
                 success: (result) => {
                     this.setState({artistName: result.get('name')});
-                    this.setState({imagePath: result.get('image')});
-                    console.log("Image path  : " + this.state.imagePath);
+                    this.setState({imagePath: result.get('image').url()});
                 },
                 error: (data, error) => {
                     console.log('Error occured : ' + error.message())
@@ -52,7 +67,7 @@ var Search = React.createClass({
         },
 
         getNextArtistName: function () {
-            if (this.state.artistUserId > 0 && this.state.artistUserId < 3) {
+            if (this.state.artistUserId > 0 && this.state.artistUserId < this.state.maxNoArtist) {
                 this.setState({artistUserId: this.state.artistUserId + 1});
                 this.getArtistName();
             } else {
@@ -61,12 +76,12 @@ var Search = React.createClass({
         },
 
         getPreviousArtistName: function () {
-            if (this.state.artistUserId > 1 && this.state.artistUserId < 3) {
+            if (this.state.artistUserId > 1) {
                 console.log("Number : " + this.state.artistUserId);
                 this.setState({artistUserId: this.state.artistUserId - 1});
+                this.getArtistName();
             } else {
                 console.log('Reached to first artist !!!');
-                console.log("Number : " + this.state.artistUserId);
             }
         },
         artistInfo: function () {
@@ -90,14 +105,13 @@ var Search = React.createClass({
                 </View>
             }
             var username = this.state.user.get('username');
-            var imageFile = this.state.imagePath;
-            var imageURL = imageFile.url();
+
 
             return (
                 <View style={styles.container}>
 
 
-                    <ResponsiveImage source={{uri:imageURL}} initHeight="200" initWidth="400"/>
+                    <ResponsiveImage source={{uri:this.state.imagePath}} initHeight="200" initWidth="400"/>
 
 
                     <Text style={styles.label}>
@@ -112,7 +126,7 @@ var Search = React.createClass({
                     <CalendarPicker
                         selectedDate={this.state.date}
                         onDateChange={this.onDateChange}
-                    />
+                        />
 
                     <View style={styles.innerButtonView}>
                         <Button text={'Cyk'} onPress={this.onLogoutPress}/>

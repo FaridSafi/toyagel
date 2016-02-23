@@ -82,7 +82,7 @@ var GiftedMessengerExample = React.createClass({
 
     // @oldestMessage is the oldest message already added to the list
     onLoadEarlierMessages(oldestMessage = {}, callback = () => {
-    }) {
+    })   {
 
         var earlierMessages = []
 
