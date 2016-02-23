@@ -42,8 +42,8 @@ var Search = React.createClass({
             return query.first({
                 success: (result) => {
                     this.setState({artistName: result.get('name')});
-                    this.setState({imagePath: '../common/images/' + count + '.png'});
-                    console.log("Number : " + count);
+                    this.setState({imagePath: result.get('image')});
+                    console.log("Image path  : " + this.state.imagePath);
                 },
                 error: (data, error) => {
                     console.log('Error occured : ' + error.message())
@@ -90,12 +90,14 @@ var Search = React.createClass({
                 </View>
             }
             var username = this.state.user.get('username');
+            var imageFile = this.state.imagePath;
+            var imageURL = imageFile.url();
 
             return (
                 <View style={styles.container}>
 
 
-                    <ResponsiveImage source={require('../common/images/1.png')} initHeight="200" initWidth="200"/>
+                    <ResponsiveImage source={{uri:imageURL}} initHeight="200" initWidth="400"/>
 
 
                     <Text style={styles.label}>
@@ -103,17 +105,20 @@ var Search = React.createClass({
                     </Text>
 
                     <View style={styles.innerButtonView}>
-                        <Button text={'Indiki'} onPress={this.getNextArtistName}/>
                         <Button text={'Onki'} onPress={this.getPreviousArtistName}/>
+                        <Button text={'Indiki'} onPress={this.getNextArtistName}/>
                     </View>
+
                     <CalendarPicker
                         selectedDate={this.state.date}
                         onDateChange={this.onDateChange}
                     />
 
-                    <Button text={'Cyk'} onPress={this.onLogoutPress}/>
+                    <View style={styles.innerButtonView}>
+                        <Button text={'Cyk'} onPress={this.onLogoutPress}/>
+                        <Button text={'Habarlas'} onPress={this.onPress}/>
+                    </View>
 
-                    <Button text={'Habarlas'} onPress={this.onPress}/>
                 </View>
 
 
@@ -158,7 +163,7 @@ var styles = StyleSheet.create({
     },
     innerButtonView: {
         flexDirection: 'row',
-        justifyContent:'space-between'
+        justifyContent: 'space-between'
 
     }
 
