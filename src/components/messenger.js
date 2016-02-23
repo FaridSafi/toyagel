@@ -10,10 +10,11 @@ var {
 
 var GiftedMessenger = require('react-native-gifted-messenger');
 var Communications = require('react-native-communications');
+var Search = require('./Search');
 var Parse = require('parse/react-native');
 
 
-var GiftedMessengerExample = React.createClass({
+var Messenger = React.createClass({
     getInitialState: function () {
         return {
             greeting: 'Salam',
@@ -40,7 +41,7 @@ var GiftedMessengerExample = React.createClass({
         return [
             {
                 text: this.state.greeting,
-                name: 'Bilbil Owezowa',
+                name: this.props.singerName,
                 image: require('../common/images/1.png'),
                 position: 'left',
                 date: new Date()
@@ -270,4 +271,4 @@ var navBarHeight = (Platform.OS === 'android' ? 56 : 64);
 var statusBarHeight = (Platform.OS === 'android' ? 25 : 0);
 
 
-module.exports = GiftedMessengerExample;
+module.exports = Messenger;

@@ -10,13 +10,15 @@ var {
 var CalendarPicker = require('react-native-calendar-picker');
 var Parse = require('parse/react-native');
 var Button = require('../common/button');
+var Messenger = require('./Messenger');
 var ResponsiveImage = require('react-native-responsive-image');
 
 
 var Search = React.createClass({
         getDefaultProps: function () {
             return {
-                date: new Date()
+                date: new Date(),
+                singerName:''
             };
         },
         getInitialState: function () {
@@ -58,6 +60,7 @@ var Search = React.createClass({
             return query.first({
                 success: (result) => {
                     this.setState({artistName: result.get('name')});
+                    console.log('Singer name : '+this.singerName);
                     this.setState({imagePath: result.get('image').url()});
                 },
                 error: (data, error) => {
@@ -108,8 +111,7 @@ var Search = React.createClass({
 
 
             return (
-                <View style={styles.container}>
-
+                    <View style={styles.container}>
 
                     <ResponsiveImage source={{uri:this.state.imagePath}} initHeight="200" initWidth="400"/>
 
