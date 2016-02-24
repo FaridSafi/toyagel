@@ -38,17 +38,18 @@ var Messenger = React.createClass({
     },
 
     getMessages() {
+        var _self = this;
         return [
             {
-                text: this.state.greeting,
-                name: this.props.singerName,
+                text: _self.state.greeting,
+                name: _self.props.singerName,
                 image: require('../common/images/1.png'),
                 position: 'left',
                 date: new Date()
             },
             {
                 text: "Bos gununiz bar my ?",
-                name: this.state.user,
+                name: _self.state.user,
                 image: null,
                 position: 'right',
                 date: new Date()
